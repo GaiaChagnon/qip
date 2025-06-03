@@ -43,14 +43,15 @@ class CartpoleEnvCfg(DirectRLEnvCfg):
     scene: InteractiveSceneCfg = InteractiveSceneCfg(num_envs=4096, env_spacing=4.0, replicate_physics=True)
 
     # reset
-    max_cart_pos = 3.0  # the cart is reset if it exceeds that position [m]
+    max_cart_pos = 2.5  # the cart is reset if it exceeds that position [m]
     initial_pole_angle_range = [-0.25, 0.25]  # the range in which the pole angle is sampled from on reset [rad]
+
 
     # reward scales
     rew_scale_alive = 1.0
     rew_scale_terminated = -2.0
     rew_scale_pole_pos = -1.0
-    rew_scale_cart_vel = -0.01
+    rew_scale_cart_vel = -0.02
     rew_scale_pole_vel = -0.005
 
 
@@ -66,6 +67,8 @@ class CartpoleEnv(DirectRLEnv):
 
         self.joint_pos = self.cartpole.data.joint_pos
         self.joint_vel = self.cartpole.data.joint_vel
+
+
 
     def _setup_scene(self):
         self.cartpole = Articulation(self.cfg.robot_cfg)
@@ -89,6 +92,7 @@ class CartpoleEnv(DirectRLEnv):
     def _get_observations(self) -> dict:
         obs = torch.cat(
             (
+
                 self.joint_pos[:, self._pole_dof_idx[0]].unsqueeze(dim=1),
                 self.joint_vel[:, self._pole_dof_idx[0]].unsqueeze(dim=1),
                 self.joint_pos[:, self._cart_dof_idx[0]].unsqueeze(dim=1),

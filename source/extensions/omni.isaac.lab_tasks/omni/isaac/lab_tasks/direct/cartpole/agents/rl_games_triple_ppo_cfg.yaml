@@ -1,0 +1,87 @@
+params:
+  seed: 42
+
+  env:
+    clip_observations: 5.0
+    clip_actions: 1.0
+
+  algo:
+    name: a2c_continuous
+  model:
+    name: continuous_a2c_logstd
+
+  network:
+    name: actor_critic
+    separate: False
+    space:
+      continuous:
+        mu_activation: None
+        sigma_activation: None
+        mu_init:
+          name: default
+        sigma_init:
+          name: const_initializer
+          val: 0
+        fixed_sigma: True
+    mlp:
+      units: [256, 256, 256]
+      activation: relu
+      d2rl: False
+      initializer:
+        name: default
+      regularizer:
+        name: None
+
+  load_checkpoint: False
+  load_path: ''
+
+  # Primary algorithm config
+  config:
+      name: cartpole_direct
+      env_name: rlgpu
+      device: 'cuda:0'
+      device_name: 'cuda:0'
+      multi_gpu: False
+      ppo: True
+      mixed_precision: False
+      normalize_input: True #different Default is True
+      normalize_value: True #different Default is True
+      num_actors: -1  # configured from the script (based on num_envs)
+      reward_shaper:
+        scale_value: 0.1
+      normalize_advantage: True #different Default is True
+      gamma: 0.99 #To optimize
+      tau : 0.985 #To optimize
+      learning_rate: 5.0e-5 #To optimize #1e-5 example Default is 5e-4
+      lr_schedule: adaptive
+      kl_threshold: 0.008
+      score_to_win: 200000
+      max_epochs: 750
+      save_best_after: 5
+      save_frequency: 10
+      grad_norm: 1.0
+      entropy_coef: 0.005 #0.0124 Default is 0, makes convergence slower
+      truncate_grads: True
+      e_clip: 0.2
+      horizon_length: 256 #16
+      minibatch_size: 32768
+      mini_epochs: 8
+      critic_coef: 8 #To optimize
+      clip_value: True
+      seq_length: 24
+      bounds_loss_coef: 0.01
+
+  # NEW SECTION for environment re scalwarding:
+  env_cfg:
+    rew_scale_alive: 2.5
+    rew_scale_pole_angle: 4.5
+    rew_scale_cart_vel: -0.02
+    rew_scale_pole_vel: -0.05
+    rew_scale_pole_straight: 0.25
+    rew_scale_pole_upwards: 0
+    rew_scale_exp_vel: 0
+    vel_scale_factor: 14
+    rew_scale_cart_center: 0.3
+    rew_scale_bonus_first: 500   # total bonus for the first bonus cycle
+    rew_scale_bonus_second: 1000  # total bonus for the second bonus cycle
+    rew_scale_bonus_third: 2000   # total bonus for the third and subsequent bonus cycles

@@ -10,7 +10,6 @@ Cartpole balancing environment.
 import gymnasium as gym
 
 from . import agents
-
 ##
 # Register Gym environments.
 ##
@@ -27,6 +26,59 @@ gym.register(
         "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
     },
 )
+
+gym.register(
+    id="Isaac-Cartpole-Direct-Double-v0",
+    entry_point=f"{__name__}.cartpole_env_double:CartpoleDoubleEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.cartpole_env_double:CartpoleEnvCfg",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_double_ppo_cfg.yaml",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:CartpolePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+    },
+)
+
+gym.register(
+    id="Isaac-Cartpole-Direct-Triple-v0",
+    entry_point=f"{__name__}.cartpole_env_triple:CartpoleTripleEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.cartpole_env_triple:CartpoleEnvCfg",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_triple_ppo_cfg.yaml",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:CartpolePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+    },
+)
+
+gym.register(
+    id="Isaac-Cartpole-Direct-Quadruple-v0",
+    entry_point=f"{__name__}.cartpole_env_quadruple:CartpoleQuadrupleEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.cartpole_env_quadruple:CartpoleEnvCfg",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_quadruple_ppo_cfg.yaml",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:CartpolePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+    },
+)
+
+gym.register(
+    id="Isaac-Cartpole-Direct-Quintuple-v0",
+    entry_point=f"{__name__}.cartpole_env_quintuple:CartpoleQuintupleEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.cartpole_env_quintuple:CartpoleEnvCfg",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_quintuple_ppo_cfg.yaml",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:CartpolePPORunnerCfg",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+    },
+)
+
 
 gym.register(
     id="Isaac-Cartpole-RGB-Camera-Direct-v0",
